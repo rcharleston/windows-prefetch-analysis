@@ -14,22 +14,22 @@ The focus of this project is **analysis, reasoning, and documentation**, not exp
 
 ---
 
-## Contents
-- 📄 [Investigation Walkthrough](analysis/prefetch-investigation.md)
-- 🧪 [PowerShell Commands Used](commands/powershell-commands.md)
-- 🖼 Screenshots in `/screenshots`
-- ⚠️ [Disclaimer](DISCLAIMER.md)
+## Repository Structure
+- 📄 **Analysis Walkthrough:** `analysis/prefetch-investigation.md`
+- 🧪 **PowerShell Commands:** `commands/powershell-commands.md`
+- 🖼 **Screenshots:** `/screenshots`
+- ⚠️ **Disclaimer:** `DISCLAIMER.md`
 
 ---
 
 ## Tools Used
-- **PECmd** (Eric Zimmerman)
-- **Timeline Explorer**
-- **PowerShell**
-- **Windows 11 VM**
+- PECmd (Eric Zimmerman)
+- Timeline Explorer
+- PowerShell
+- Windows 11 (VM)
 
 ---
 
-## Write-Up
-📄 Full article:  
+## Full Write-Up
+📄 Medium article:  
 https://medium.com/@romancharleston
