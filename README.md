@@ -1,63 +1,35 @@
 # Windows Prefetch Analysis – DFIR Case Study
 
-## Overview
-This project demonstrates a forensic analysis of **Windows Prefetch artifacts** to understand application execution behavior and reconstruct timelines during investigations.
+This repository documents a **Windows Prefetch forensic investigation** performed in a controlled home lab environment to demonstrate how a single artifact can be used to reconstruct execution timelines during incident response.
 
-The goal of this case study is not tool demonstration, but **analytical reasoning** — focusing on how defenders can leverage Prefetch artifacts during incident response and threat investigations.
-
----
-
-## Objectives
-- Understand how Windows Prefetch works
-- Analyze execution metadata for investigative use
-- Practice timeline reconstruction
-- Document findings in a clear, defensible manner
+The focus of this project is **analysis, reasoning, and documentation**, not exploitation.
 
 ---
 
-## What Are Prefetch Files?
-Windows Prefetch files (`.pf`) are artifacts created to improve application load performance.  
-For defenders, they provide valuable insight into:
-- Program execution
-- Execution frequency
-- First and last run timestamps
-- Associated file paths
+## Project Overview
+- Investigated a simulated malware execution scenario
+- Used Windows Prefetch artifacts to reconstruct execution timelines
+- Identified suspicious executables and post-execution behavior
+- Correlated findings using PECmd and Timeline Explorer
 
 ---
 
-## Analysis Approach
-This case study focused on:
-- Identifying relevant Prefetch artifacts
-- Extracting execution metadata
-- Correlating timestamps across artifacts
-- Interpreting findings in an investigative context
-
-The emphasis was placed on **why the artifact matters**, not just what data it contains.
+## Contents
+- 📄 [Investigation Walkthrough](analysis/prefetch-investigation.md)
+- 🧪 [PowerShell Commands Used](commands/powershell-commands.md)
+- 🖼 Screenshots in `/screenshots`
+- ⚠️ [Disclaimer](DISCLAIMER.md)
 
 ---
 
-## Defender Use Cases
-- Confirming program execution during an incident
-- Supporting timeline reconstruction
-- Identifying suspicious or unexpected binaries
-- Correlating execution with other telemetry
-
----
-
-## Key Takeaways
-- Prefetch artifacts are a powerful but contextual signal
-- They should be interpreted alongside other evidence
-- Understanding artifact behavior is more important than memorizing tools
+## Tools Used
+- **PECmd** (Eric Zimmerman)
+- **Timeline Explorer**
+- **PowerShell**
+- **Windows 11 VM**
 
 ---
 
 ## Write-Up
-A detailed walkthrough of this analysis is available here:
-
-📄 **Medium Article:**  
+📄 Full article:  
 https://medium.com/@romancharleston
-
----
-
-## Disclaimer
-This project uses **sanitized, non-production data** and does not contain proprietary or sensitive information.
