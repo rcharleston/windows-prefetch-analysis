@@ -1,0 +1,15 @@
+.DS_Store
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*credentials*.csv
+*accessKeys*.csv
+*.tfstate*
+*.tfplan
+*.tfvars
+.terraform/
+raw-evidence/

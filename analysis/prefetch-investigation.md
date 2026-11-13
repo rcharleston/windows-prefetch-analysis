@@ -1,71 +1,39 @@
-# Prefetch Analysis Home Lab – Investigation Walkthrough
+# Investigation: suspicious execution through Prefetch
 
-## Table of Contents
-- What are Prefetch Files?
-- Attack Scenario
-- Setting Up VM Environment
-- Begin Analysis and Create Timeline
-- Prefetch File Deep Dive
-- Finalizing the Scope and Timeline
-- Simple Write-Up of The Investigation
-- Tools Used
-- Methods Used
+## Scope
 
----
+This is a simulated incident involving a fictional Initech workstation. The available artifact is Windows Prefetch. Original filesystem timestamps were not available in the exercise; the investigation relies on embedded execution data and referenced paths. The original article contains the detailed screenshots.
 
-## What are Prefetch Files?
-Regarding digital forensics, Windows Prefetch files represent a semi-hidden treasure trove of evidence for investigators analyzing system activity. Automatically created by Windows to optimize application loading times, these files inadvertently serve as detailed logs of program execution history. Prefetch files track when applications run, how often they execute, and which resources they access during startup.
+## Method
 
-“In this homelab project, we’ll explore the practical application of Prefetch file analysis, working through a hands-on investigation designed to build skills in extracting, interpreting, and leveraging this valuable evidence. The lab uses Prefetch files collected from a system involved in a simulated breach scenario.“
+1. Parse the collected `.pf` directory with PECmd to produce the detailed CSV and timeline CSV.
+2. Open both exports in Timeline Explorer, sort execution observations, and find the known suspicious filename.
+3. Anchor the investigation on `BURPSUITE-PRO-CRACKED.EXE` at `2024-03-12 18:36:11`.
+4. Tag nearby executions, then inspect individual files with PECmd's keyword filter.
+5. Pivot on unusual executable paths, shared directories, and referenced files. Record observations separately from interpretations.
+6. Return to the complete timeline to check scope, competing explanations, and gaps.
 
----
+## Evidence and interpretation
 
-## Attack Scenario
-I’m investigating a security incident involving a workstation belonging to Bill Lumbergh at Initech Software. “Bill is an IT technician with aspirations of transitioning into the cybersecurity field.”
+| Observation in the published analysis | Working interpretation | Evidence needed to strengthen it |
+|---|---|---|
+| 7ZG referenced the similarly named cracked-software archive | Possible extraction before execution | Archive metadata, download history, and filesystem evidence |
+| `B.EXE` referenced browser-related paths and `1.TXT` | Possible browser-data collection | File contents, binary analysis, and process telemetry |
+| `C.EXE` referenced `WCEAUX.DLL` and `2.TXT` | Possible credential-access activity | Binary identity, memory/process evidence, and output contents |
+| PowerShell referenced business documents and a backup/logs path | Possible collection or staging | Script-block logs, command lines, and file operations |
+| Rclone referenced the staging directory, configuration, and `LSASS.DMP` | Possible exfiltration preparation | Rclone configuration, network logs, and destination evidence |
+| A later `SD.EXE` run referenced many of the same staged files | Possible cleanup | Binary identity, command line, and filesystem changes |
 
-While searching for free penetration testing resources, Bill used Reddit to locate a cracked version of BurpSuite Pro. Unfortunately, an unscrupulous Redditor appears to have provided Bill with malware instead of legitimate software.
+## Timeline discipline
 
-In this lab, I’ve obtained crucial forensic artifacts from Bill’s system (post-compromise) to analyze what occurred after he executed the malicious file. This lab will specifically focus on the Prefetch files recovered from Bill’s computer. I’m investigating using this single artifact (prefetch files) reveals information about the attack sequence, methods, and timeline.
+The accompanying CSV is a **selected observation list**, not a full forensic timeline. It distinguishes a single recorded run from a last-run value. Timestamps are preserved as displayed in the published lab; the source does not establish their time zone. Do not silently convert them to UTC.
 
-Throughout this lab, I’ll document my analysis process, tools used, and key findings to demonstrate how Prefetch files can provide valuable insights during cybersecurity investigations.
+Prefetch can support execution and file-reference analysis. It does not independently identify a human actor, reveal every command-line argument, establish parent/child process relationships, or prove data transfer. Legitimate tools can also appear in ordinary administration.
 
----
+## Conclusion
 
-## Setting Up VM Environment
-1. Downloading VMware Workstation Pro (Link):
+The investigation produced a scoped set of suspicious executions and useful pivots for a broader incident investigation. The strongest next step would be correlation with event logs, process telemetry, browser history, filesystem artifacts, and network records. The value is in explaining what the artifact supports—and where the evidence stops.
 
-2. Download and deploy a Windows 11 VM directly from Microsoft (Link):
+## Source
 
-3. I opened PowerShell in an Administrative window and typed the following command:
-
-“IEX (New-Object Net.Webclient).downloadstring(“https://ec-blog.s3.us-east-1.amazonaws.com/DFIR-Lab/PF_Lab/prep_lab.ps1&#8221;)“
-
-Press enter or click to view image in full size
-
-^ This command executes a script that will automatically install .NET 6, Eric Zimmerman’s tools, as well as download the forensic evidence.
-
-4. After verifying the evidence has been collected and is in the correct file location, I begin my analysis.
-
-Press enter or click to view the image in full size
-
-
-> **Screenshot placeholder:** `[ADD: setup-script-run.png]`  
-> **Screenshot placeholder:** `[ADD: evidence-location.png]`
-
----
-
-## Begin Analysis and Create Timeline
-( paste this section )
-
-> **Screenshot placeholder:** `[ADD: pecmd-directory-command.png]`  
-> **Screenshot placeholder:** `[ADD: timeline-explorer-open-csv.png]`  
-> **Screenshot placeholder:** `[ADD: prefetch-timeline-view.png]`  
-> **Screenshot placeholder:** `[ADD: burpsuite-search-result.png]`  
-> **Screenshot placeholder:** `[ADD: tagging-example.png]`
-
----
-
-## Prefetch File Deep Dive
-( paste this section )
-
-> **Screenshot placeholder:** `[ADD: pecmd-7zg-ou]()
+[Roman Charleston — Prefetch Analysis Home Lab](https://medium.com/@romancharleston/prefetch-analysis-home-lab-4c9e376c9e01)
